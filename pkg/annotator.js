@@ -1439,6 +1439,7 @@
     Widget.prototype.checkOrientation = function() {
       var current, offset, viewport, widget, window;
       this.resetOrientation();
+      this.element[0].style.right = 'auto';
       window = $(Annotator.Util.getGlobal());
       widget = this.element.children(":first");
       offset = widget.offset();
@@ -1454,7 +1455,13 @@
         this.invertY();
       }
       if ((current.right - viewport.right) > 0) {
-        this.invertX();
+        if (this.element[0].offsetLeft > widget.width() - 18) {
+          this.invertX();
+        }
+        else {
+          this.element[0].style.left = 'auto';
+          this.element[0].style.right = widget.width() - 18 + 'px';
+        }
       }
       return this;
     };
